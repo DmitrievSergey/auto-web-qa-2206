@@ -1,4 +1,8 @@
 .idea
+<<<<<<< HEAD
 qavenv
 .pytest_cache
 */__pycache__
+=======
+venv
+>>>>>>> parent of 2d31272 (pytest)
