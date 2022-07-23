@@ -6,7 +6,6 @@ from src.Target import Target
 from src.Users import Users
 
 users_list = []
-active_user_list = []
 user_books = []
 with open("/Users/sergejdmitriev/Otus/qa_python/auto-web-qa-2206/users.json", "r") as f:
     users = json.loads(f.read())
@@ -40,6 +39,6 @@ def final_json():
 
 
 user_books = final_json()
-with open("result.json", "w") as outfile:
+with open("../files/result.json", "w") as outfile:
     json.dump(user_books, outfile, default=lambda o: o.__dict__, indent=4)
 
