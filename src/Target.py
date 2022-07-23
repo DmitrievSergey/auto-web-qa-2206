@@ -11,4 +11,3 @@ class Target:
         self.address = address
         self.age = age
         self.books = books
-
