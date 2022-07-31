@@ -3,9 +3,7 @@ import requests
 
 from tests.schemas.json_placeholder import json_schema
 
-URL = 'https://jsonplaceholder.typicode.com/posts'
 
-
-def test_get_list():
-    response = requests.get(f"{URL}")
+def test_get_list(url):
+    response = requests.get(f"{url}")
     validate(instance=response.json(), schema=json_schema)
