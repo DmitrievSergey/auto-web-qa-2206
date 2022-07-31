@@ -1,6 +1,8 @@
 import json
 import csv
 
+from dataclasses import astuple, asdict
+
 from src.Book import Book
 from src.Target import Target
 from src.Users import Users
@@ -9,8 +11,10 @@ users_list = []
 user_books = []
 with open("/Users/sergejdmitriev/Otus/qa_python/auto-web-qa-2206/users.json", "r") as f:
     users = json.loads(f.read())
+
     for user in users:
-        users_list.append(Users(**user))
+        u = Users(user['age'], user['name'], user['gender'], user['address'])
+        users_list.append(u)
 
 books_list = []
 with open('/Users/sergejdmitriev/Otus/qa_python/auto-web-qa-2206/books.csv', newline='') as f:
@@ -40,4 +44,4 @@ def final_json():
 
 user_books = final_json()
 with open("../files/result.json", "w") as outfile:
-    json.dump(user_books, outfile, default=lambda o: o.__dict__, indent=4)
+    json.dump(user_books, outfile, default=lambda o: o.__dict__,  indent=4)
