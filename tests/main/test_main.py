@@ -1,13 +1,30 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import pytest
+
+from src.page_objects.MainPage import MainPage
+from src.page_objects.elements.Elements import Elements
 
 
 def test_search(browser):
-    browser.get(browser.url)
-    wait = WebDriverWait(browser, 10, poll_frequency=1)
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "i[class='fa fa-phone']")))
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "a[title='My Account']")))
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "i[class='fa fa-heart']")))
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "i[class='fa fa-shopping-cart']")))
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "i[class='fa fa-share']")))
+    MainPage(browser) \
+        .open_main_page() \
+        .verify_cart_icon_presence() \
+        .verify_my_account_presence() \
+        .verify_share_icon_presence() \
+        .verify_phone_icon_presence() \
+        .verify_wish_icon_presence()
+
+
+@pytest.mark.parametrize('currency',
+                         ['EU', 'Pound', 'US'])
+def test_currency_euro(browser, currency):
+    MainPage(browser) \
+        .open_main_page()
+    Elements(browser) \
+        .click_currency() \
+        .choose_currency(currency)
+    if currency == 'EU':
+        assert Elements(browser).get_currency_icon() == '€'
+    elif currency == 'Pound':
+        assert Elements(browser).get_currency_icon() == '£'
+    elif currency == 'US':
+        assert Elements(browser).get_currency_icon() == '$'

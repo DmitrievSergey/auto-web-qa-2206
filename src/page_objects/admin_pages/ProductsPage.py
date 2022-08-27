@@ -1,0 +1,103 @@
+from selenium.webdriver.common.by import By
+
+from src.page_objects.BasePage import BasePage
+
+
+class Product:
+    def __init__(self, name, tag_name, model):
+        self.name = name
+        self.tag_name = tag_name
+        self.model = model
+
+
+class ProductsPage(BasePage):
+    ADD_PRODUCT_BUTTON = (By.XPATH, "//div[@class='pull-right']//a[@class='btn btn-primary']")
+    DELETE_BUTTON = (By.XPATH, "//button[@class='btn btn-danger']")
+
+    SAVE_BUTTON = (By.XPATH, "//button[@type='submit']")
+    GENERAL_TAB = (By.XPATH, "//a[contains(text(),'General')]")
+    DATA_TAB = (By.XPATH, "//a[contains(text(),'Data')]")
+
+    PRODUCT_NAME_INPUT = (By.XPATH, "//input[@id='input-name1']")
+    META_TAG_TITLE_INPUT = (By.XPATH, "//input[@id='input-meta-title1']")
+    MODEL_INPUT = (By.XPATH, "//input[@id='input-model']")
+
+    PAGES_LIST = (By.XPATH, "//ul[@class='pagination']/li")
+
+    FILTER_PRODUCT_NAME_INPUT = (By.XPATH, "//input[@id='input-name']")
+    FILTER_MODEL_INPUT = (By.XPATH, "//input[@id='input-model']")
+    FILTER_BUTTON = (By.XPATH, "//button[@id='button-filter']")
+
+    LIST_OF_PRODUCTS = (By.XPATH, "//tbody/tr")
+    ELEMENT_LIST_OF_PRODUCT = (By.XPATH, "./td")
+
+    NO_RESULTS = (By.XPATH, "//tbody/tr/td[@class='text-center']")
+
+    def click_save_button(self):
+        self._verify_element_presence(self.SAVE_BUTTON).click()
+        return self
+
+    def click_data_tab(self):
+        self._verify_element_presence(self.DATA_TAB).click()
+        return self
+
+    def add_new_product(self, product_name, meta_name, model):
+        self._verify_element_presence(self.PRODUCT_NAME_INPUT).send_keys(product_name)
+        self._verify_element_presence(self.META_TAG_TITLE_INPUT).send_keys(meta_name)
+        self.click_data_tab()
+        self._verify_element_presence(self.MODEL_INPUT).send_keys(model)
+        self.click_save_button()
+        return self
+
+    def click_add_product_button(self):
+        self._verify_element_presence(self.ADD_PRODUCT_BUTTON).click()
+        return self
+
+    def click_next_page(self):
+        element = self.browser.find_elements(*self.PAGES_LIST)[-2]
+        self._click_element(element)
+
+    def find_product_by_filter(self, product_name, model):
+        self._verify_element_presence(self.FILTER_PRODUCT_NAME_INPUT).send_keys(product_name)
+        self._verify_element_presence(self.FILTER_MODEL_INPUT).send_keys(model)
+        self._verify_element_presence(self.FILTER_BUTTON).click()
+        return self
+
+    def find_no_result(self):
+        return self._verify_element_presence(self.NO_RESULTS)
+
+    def accept_alert(self):
+        self._verify_alert_presence().accept()
+
+    def get_list_of_products(self, product, model):
+        self.find_product_by_filter(product, model)
+        return self.browser.find_elements(*self.LIST_OF_PRODUCTS)
+
+    def get_count_of_product(self, product, model):
+        self.find_product_by_filter(product, model)
+        return len(self.browser.find_elements(*self.LIST_OF_PRODUCTS))
+
+    def get_list_of_name_and_model(self, product, model):
+        list_of_name_and_model = []
+        self.find_product_by_filter(product, model)
+        product_list = self.browser.find_elements(*self.LIST_OF_PRODUCTS)
+        count = len(product_list)
+        while count > 0:
+            name = product_list[count-1].find_elements(*self.ELEMENT_LIST_OF_PRODUCT)[2].text
+            model = product_list[count-1].find_elements(*self.ELEMENT_LIST_OF_PRODUCT)[3].text
+            list_of_name_and_model.append((name, model))
+            count -= 1
+            print(list_of_name_and_model)
+        return list_of_name_and_model
+
+    def delete_product(self, product, model):
+        self.find_product_by_filter(product, model)
+        product_list = self.browser.find_elements(*self.LIST_OF_PRODUCTS)
+        count = len(product_list)
+        while count > 0:
+            product_list = self.browser.find_elements(*self.LIST_OF_PRODUCTS)
+            product_list[count - 1].find_elements(*self.ELEMENT_LIST_OF_PRODUCT)[0].click()
+            self._verify_element_presence(self.DELETE_BUTTON).click()
+            self.accept_alert()
+            count -= 1
+        return self
