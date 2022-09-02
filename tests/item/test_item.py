@@ -1,14 +1,15 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import pytest
+
+from src.page_objects.ItemPage import ItemPage
 
 
-def test_search(browser):
-    browser.get(browser.url + "laptop-notebook/hp-lp3065")
-    wait = WebDriverWait(browser, 10, poll_frequency=1)
-    wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "div[class='col-sm-4']>h1"), "HP LP3065"))
-    wait.until(EC.text_to_be_present_in_element((By.CSS_SELECTOR, "div[class='col-sm-4']>ul>li>h2"), "$122.00"))
-    wait.until(EC.text_to_be_present_in_element((By.XPATH, "//div/ul/li[contains(text(),'Ex Tax:')]"), "$100.00"))
-    wait.until(
-        EC.text_to_be_present_in_element((By.XPATH, "//div/ul/li[contains(text(),'Price in reward points:')]"), "400"))
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div[class='input-group date']>input[type='text']")))
+@pytest.mark.parametrize('product_name, price, tax, points',
+                         [("HP LP3065", "$122.00", "$100.00", "400")])
+def test_item_page_elements(browser, product_name, price, tax, points):
+    ItemPage(browser) \
+        .open_item_page() \
+        .verify_delivery_date_input_presence() \
+        .verify_price_in_reward_points_presence(points) \
+        .verify_product_name_presence(product_name) \
+        .verify_product_price_presence(price) \
+        .verify_product_tax_presence(tax)
