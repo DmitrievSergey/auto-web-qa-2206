@@ -33,20 +33,21 @@ class ProductsPage(BasePage):
     NO_RESULTS = (By.XPATH, "//tbody/tr/td[@class='text-center']")
 
     def click_save_button(self):
-        self._verify_element_presence(self.SAVE_BUTTON).click()
-        return self
+        self.logger.info("Нажали кнопку Сохранить")
+        self._click(self.SAVE_BUTTON)
 
     def click_data_tab(self):
-        self._verify_element_presence(self.DATA_TAB).click()
+        self._click(self.DATA_TAB)
         return self
 
     def add_new_product(self, product_name, meta_name, model):
+        self.logger.info("Зашли в метод add_new_product ")
         self._input(self.PRODUCT_NAME_INPUT, product_name)
         self._input(self.META_TAG_TITLE_INPUT, meta_name)
         self.click_data_tab()
         self._input(self.MODEL_INPUT, model)
         self.click_save_button()
-        return self
+        self.logger.info("Завершили добавление продукта")
 
     def click_add_product_button(self):
         self._click(self.ADD_PRODUCT_BUTTON)
@@ -56,7 +57,6 @@ class ProductsPage(BasePage):
         self._input(self.FILTER_PRODUCT_NAME_INPUT, product_name)
         self._input(self.FILTER_MODEL_INPUT, model)
         self._click(self.FILTER_BUTTON)
-        return self
 
     def find_no_result(self):
         return self._verify_element_presence(self.NO_RESULTS)
@@ -69,6 +69,7 @@ class ProductsPage(BasePage):
         return len(self.browser.find_elements(*self.LIST_OF_PRODUCTS))
 
     def get_list_of_name_and_model(self, product, model):
+        self.logger.info("Зашли в метод get_list_of_name_and_model")
         list_of_name_and_model = []
         self.find_product_by_filter(product, model)
         product_list = self.browser.find_elements(*self.LIST_OF_PRODUCTS)

@@ -10,7 +10,7 @@ from src.page_objects.admin_pages.ProductsPage import ProductsPage
 def test_add_new_product(browser, product_name, meta_name, model):
     LoginAdminPage(browser) \
         .open_admin_page() \
-        .login_in_admin()
+        .login_in_admin(user_name='user', user_password='bitnami')
     AdminPage(browser) \
         .click_catalog() \
         .click_products()
@@ -25,7 +25,7 @@ def test_add_new_product(browser, product_name, meta_name, model):
 def test_delete_product(browser, product_name, model):
     LoginAdminPage(browser) \
         .open_admin_page() \
-        .login_in_admin()
+        .login_in_admin(user_name='user', user_password='bitnami')
     AdminPage(browser) \
         .click_catalog() \
         .click_products()
