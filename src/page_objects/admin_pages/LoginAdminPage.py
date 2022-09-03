@@ -36,8 +36,8 @@ class LoginAdminPage(BasePage):
         self._verify_element_presence(self.SUBMIT_BUTTON)
         return self
 
-    def login_in_admin(self):
-        self._verify_element_presence(self.USERNAME_INPUT).send_keys("user")
-        self._verify_element_presence(self.PASSWORD_INPUT).send_keys("bitnami")
-        self._verify_element_presence(self.SUBMIT_BUTTON).click()
-        return AdminPage(self.browser)
+    def login_in_admin(self, user_name, user_password):
+        self._input(self.USERNAME_INPUT, user_name)
+        self._input(self.PASSWORD_INPUT, user_password)
+        self._click(self.SUBMIT_BUTTON)
+        return self

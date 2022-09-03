@@ -12,8 +12,7 @@ class MainPage(BasePage):
     MY_ACCOUNT = (By.CSS_SELECTOR, "a[title='My Account']")
 
     def open_main_page(self):
-        self._open_page(self.PATH)
-        return self
+        return self._open_page(self.PATH)
 
     def verify_phone_icon_presence(self):
         self._verify_element_presence(self.PHONE_ICON)
