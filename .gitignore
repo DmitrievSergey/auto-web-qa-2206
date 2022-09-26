@@ -1,7 +1,8 @@
 .idea
 qavenv
-.log
+*.log
 .pytest_cache/
 */__pycache__/
 __pycache__/
+allure-results
 
