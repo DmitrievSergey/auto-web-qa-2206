@@ -17,7 +17,7 @@ def test_registration_page_elements(browser):
 
 @allure.title('Регистрируем нового пользователя')
 @pytest.mark.parametrize('first_name, last_name, email, telephone, pwd, cpwd',
-                         [('first_name3', 'last_name3', 'fl5@mail.com', '32233322', '1234', '1234')])
+                         [('first_name3', 'last_name3', 'fl8@mail.com', '32233322', '1234', '1234')])
 def test_registration_new_user(browser, first_name, last_name, email, telephone, pwd, cpwd):
     RegistrationPage(browser) \
         .open_registration_page() \
