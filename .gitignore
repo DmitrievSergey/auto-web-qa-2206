@@ -5,4 +5,5 @@ qavenv
 */__pycache__/
 __pycache__/
 allure-results
+*scan.txt
 
