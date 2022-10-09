@@ -6,4 +6,4 @@ qavenv
 __pycache__/
 allure-results
 *scan.txt
-
+*.json
