@@ -11,12 +11,12 @@ from selenium.webdriver.firefox.service import Service as FFService
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
-    parser.addoption("--url", action="store", default="http://localhost/")
+    parser.addoption("--url", action="store", default="https://demo.opencart.com")
     parser.addoption("--drivers", action="store", default=os.path.expanduser("~/Downloads/drivers"))
     parser.addoption("--tolerance", type=int, default=5)
     parser.addoption("--log_level", action="store", default="INFO")
     parser.addoption("--executor", action="store", default="local")
-    parser.addoption("--bversion", action="store", default="106.0.5249.119")
+    parser.addoption("--bversion", action="store", default="latest")
     parser.addoption("--vnc", action="store_true", default=False)
     parser.addoption("--logs", action="store_true", default=False)
     parser.addoption("--video", action="store_true", default=False)
@@ -63,7 +63,7 @@ def browser(request):
         )
 
     elif browser == "chrome":
-        service = ChromiumService(executable_path=drivers + "/chromedriver106")
+        service = ChromiumService(executable_path=drivers + "/chromedriver")
         driver = webdriver.Chrome(service=service)
     elif browser == "firefox":
         service = FFService(executable_path=drivers + "/geckodriver")

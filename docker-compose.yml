@@ -1,0 +1,17 @@
+version: "3.7"
+
+networks:
+  oc_test:
+    external: true
+
+
+services:
+  oc_test:
+    networks:
+      - oc_test
+    image: "oc_test"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "$PWD/allure-results:/app/allure-results"
