@@ -1,0 +1,8 @@
+# Ignore IDE dir
+.idea/
+
+# Ignore git and cache dirs
+.git
+.cache
+
+.logs/
