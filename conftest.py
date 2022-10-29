@@ -16,7 +16,7 @@ def pytest_addoption(parser):
     parser.addoption("--tolerance", type=int, default=5)
     parser.addoption("--log_level", action="store", default="INFO")
     parser.addoption("--executor", action="store", default="local")
-    parser.addoption("--bversion", action="store", default="latest")
+    parser.addoption("--bversion", action="store", default="106.0")
     parser.addoption("--vnc", action="store_true", default=False)
     parser.addoption("--logs", action="store_true", default=False)
     parser.addoption("--video", action="store_true", default=False)
@@ -63,7 +63,7 @@ def browser(request):
         )
 
     elif browser == "chrome":
-        service = ChromiumService(executable_path=drivers + "/chromedriver")
+        service = ChromiumService(executable_path=drivers + "/chromedriver106")
         driver = webdriver.Chrome(service=service)
     elif browser == "firefox":
         service = FFService(executable_path=drivers + "/geckodriver")

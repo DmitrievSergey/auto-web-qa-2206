@@ -23,7 +23,8 @@ class BasePage:
 
     @allure.step("Открываем url {page_url}")
     def _open_page(self, page_url):
-        self.logger.info("Opening url: {} at {} in test {}".format(page_url, datetime.datetime.now(), self.browser.test_name))
+        self.logger.info(
+            "Opening url: {} at {} in test {}".format(page_url, datetime.datetime.now(), self.browser.test_name))
         self.browser.get(self.browser.url + page_url)
 
     @allure.step("Ждем пока появится элемент {locator}")
