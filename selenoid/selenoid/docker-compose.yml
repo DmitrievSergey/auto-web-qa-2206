@@ -31,7 +31,7 @@ services:
     links:
       - selenoid
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - selenoid
     command: ["--selenoid-uri", "http://selenoid:4444"]
