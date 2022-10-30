@@ -1,11 +1,11 @@
 version: "3.7" # https://docs.docker.com/compose/compose-file/
 
 networks:
-  oc_test:
+  jenkins:
     external: true
   selenoid:
     external:
-      name: oc_test
+      name: jenkins
 
 
 services:
