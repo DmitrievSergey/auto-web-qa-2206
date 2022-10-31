@@ -20,4 +20,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Этот параметр можно переопределить при СОЗДАНИИ контейнера т.е. run команде
-ENTRYPOINT ["pytest", "--executor=selenoid"]
+ENTRYPOINT ["pytest"]
